@@ -23,14 +23,18 @@ jobs:
         include:
           - os: windows-latest
             asset_name: cli-agent-windows-amd64.exe
+            python_arch: x64
           - os: macos-latest
             asset_name: cli-agent-darwin-arm64
+            python_arch: arm64
             macos_target: "11.0"
-          - os: macos-15-intel
+          - os: macos-latest
             asset_name: cli-agent-darwin-amd64
+            python_arch: x64
             macos_target: "11.0"
           - os: ubuntu-latest
             asset_name: cli-agent-linux-amd64
+            python_arch: x64
 
     steps:
       - name: Checkout Repository
@@ -40,6 +44,7 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: '3.11'
+          architecture: ${{ matrix.python_arch || 'x64' }}
           cache: 'pip'
           cache-dependency-path: backend/requirements.txt
 
